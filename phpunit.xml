@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+  colors="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  syntaxCheck="false"
+  bootstrap="./bootstrap.php"
+  >
+  <php>
+    <ini name="error_reporting" value="E_ALL"/>
+    <ini name="log_errors" value="1"/>
+    <!--<ini name="error_log" value="error.log"/>-->   
+  </php>
+	<!--<testsuites>
+		<testsuite name="My Test Suite">
+		  <directory>./tests/</directory>
+		</testsuite>
+  </testsuites>
+  -->
+  <listeners>
+    <listener class="TimingListener" file="Listener.php">
+      <arguments>
+      </arguments>
+    </listener>
+  </listeners>
+</phpunit>

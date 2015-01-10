@@ -1,0 +1,18 @@
+<table>
+  <caption>
+    <h4>{{ suite.name }}</h4>
+    <p><strong>{{ suite.meta.shortDescription }}</strong></p>
+    <p>{{ suite.meta.description }}</p>
+  </caption>
+  <thead>
+    <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+  </thead>
+  <tbody>
+    {%for test in suite.tests %}
+      <tr>
+        <td>{{ test.name }}</td><td>{{ test.meta.description|default("-") }}</td><td>{{ test.meta.time|round(6) }}s</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</pre>
+
