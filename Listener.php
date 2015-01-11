@@ -2,8 +2,8 @@
 require_once './vendor/autoload.php';
 
 /**
- * Listen for timing test finishing and ending. Log the result.
- * You can call the (start|end)Test method manually or let PHPUnit do it. Former recommended.
+ * Listener for PHPUnit tests and suites. Generates HTML view of results, via Twig.
+ * PHPUnit already provides time taken for each test. This listener asdd two more methods to start/stop a test timer for better accuracy.
  */
 class TimingListener extends PHPUnit_Framework_BaseTestListener
 {
@@ -16,6 +16,14 @@ class TimingListener extends PHPUnit_Framework_BaseTestListener
     $this->view = new View();
     self::$instance = $this;
   }
+  
+  /**
+   * Render. There is no "all done" event. Argh.
+   */
+  public function __destruct() {
+    $this->view->render();
+  }
+
   
   /**
    * Notify view listener with a description of the current suite.
@@ -105,34 +113,35 @@ class TimingListener extends PHPUnit_Framework_BaseTestListener
 }
 
 
+/**
+ * Collects test stats, then renders them via a Twig template.
+ */
 class View
 {
-  /** Manage the zipping */
   private $stack = [];
   private $suites = [];
-  private $suiteStopCounter = 0;
   private $twig;
 
-  public function __construct() 
+  public function __construct($tmpl = './tmpl/') 
   {
-    $loader = new Twig_Loader_Filesystem('./tmpl/');
+    $loader = new Twig_Loader_Filesystem($tmpl);
     $this->twig = new Twig_Environment(
       $loader,
       ['debug' => true]
     );
     $this->twig->addExtension(new Twig_Extension_Debug());
   }
-  
+
   public function startEvent($eventType, $eventName, $meta) {
     if(is_callable([$this,"start_{$eventType}"])) {
-      $this->stack[] = $eventType;
+      $this->stack[] = $eventType . $eventName;
       call_user_func_array([$this, "start_{$eventType}"], [$eventName, $meta]);
     }
   }
   
   public function stopEvent($eventType, $eventName, $meta) {
     if(is_callable([$this,"stop_{$eventType}"])) {
-      if($this->stack[sizeof($this->stack)-1] != $eventType) {
+      if($this->stack[sizeof($this->stack)-1] != $eventType . $eventName) {
         throw new Exception("Stop event doesn't match started event.");
       }
       call_user_func_array([$this, "stop_{$eventType}"], [$eventName, $meta]);
@@ -142,21 +151,18 @@ class View
 
   public function start_suite($name, $meta) {
     debug("Start suite $name\n");
+    $name = isset($meta['name']) ? $meta['name'] : $name;
     $newSuite = [
       'name' => $name,
       'meta' => $meta,
-      'tests' => []
+      'tests' => [],
+      'stats' => ['min' => INF, 'max' => -INF, 'cnt' => 0]
     ];
     $this->suites[] = $newSuite;
-    $this->suiteStopCounter++;
   }
   
   public function stop_suite($name, $meta) {
     debug("Stop suite $name\n");
-    $this->suiteStopCounter--;
-    if($this->suiteStopCounter == 0) {
-      $this->render();
-    }
   }
   
   public function start_test($name, $meta) {
@@ -165,18 +171,24 @@ class View
   
   public function stop_test($name, $meta) {
     debug("\tStop test $name\n");
+    $name = isset($meta['method']['name'][0]) ? $meta['method']['name'][0] : $name;
     $newTest = [
       'name' => $name,
       'meta' => $meta
     ];
-    $this->suites[count($this->suites)-1]['tests'][] = $newTest;
+    $currentSuite =& $this->getCurrentSuite();
+    $currentSuite['tests'][] = $newTest;
   }
   
   public function render() {
     print $this->twig->render("suites.html", ['suites' => $this->suites]);
   }
+
+  private function &getCurrentSuite() {
+    return $this->suites[count($this->suites)-1];
+  }
 }
 
 function debug($msg) {
-  #fprintf(STDERR, $msg . "\n");
+  fprintf(STDERR, $msg . "\n");
 }

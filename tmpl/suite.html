@@ -10,8 +10,9 @@
   <tbody>
     {%for test in suite.tests %}
       <tr>
-        <td>{{ test.name }}</td><td>{{ test.meta.description|default("-") }}</td><td>{{ test.meta.time|round(6) }}s</td>
+        <td>{{ test.name }}</td><td>{{ test.meta.method.shortDescription[0]|default("-") }}</td><td>{{ test.meta.time|round(6) }}s</td>
       </tr>
+      {#<tr><td colspan=3><pre>{{ dump(test) }}</pre></td></tr>#}
     {% endfor %}
   </tbody>
 </pre>

@@ -11,12 +11,11 @@
     <ini name="log_errors" value="1"/>
     <!--<ini name="error_log" value="error.log"/>-->   
   </php>
-	<!--<testsuites>
-		<testsuite name="My Test Suite">
-		  <directory>./tests/</directory>
-		</testsuite>
+  <testsuites>
+    <testsuite name="Test Suite">
+      <directory>./tests/</directory>
+    </testsuite>
   </testsuites>
-  -->
   <listeners>
     <listener class="TimingListener" file="Listener.php">
       <arguments>
