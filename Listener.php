@@ -178,6 +178,9 @@ class View
     ];
     $currentSuite =& $this->getCurrentSuite();
     $currentSuite['tests'][] = $newTest;
+    $currentSuite['stats']['min'] = min($currentSuite['stats']['min'], $meta['time']);
+    $currentSuite['stats']['max'] = max($currentSuite['stats']['max'], $meta['time']);
+    $currentSuite['stats']['cnt']++;    
   }
   
   public function render() {
