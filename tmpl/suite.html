@@ -1,19 +1,23 @@
-<table>
-  <caption>
-    <h4>{{ suite.name }}</h4>
-    <p><strong>{{ suite.meta.shortDescription }}</strong></p>
-    <p>{{ suite.meta.description }}</p>
-  </caption>
-  <thead>
-    <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
-  </thead>
-  <tbody>
-    {%for test in suite.tests %}
-      <tr>
-        <td>{{ test.name }}</td><td>{{ test.meta.method.snippet[0]|default("-") }}</td><td>{{ test.meta.time|round(6) }}s</td>
-      </tr>
-      {#<tr><td colspan=3><pre>{{ dump(test) }}</pre></td></tr>#}
-    {% endfor %}
-  </tbody>
-</pre>
+<div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>{{ suite.name }}</h4>
+      <p><i>{{ suite.meta.shortDescription }}</i></p>
+      <p>{{ suite.meta.description }}</p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+      {%for test in suite.tests %}
+        {% set time = '%06f'|format(test.meta.time) %}
+        {% set utime = '%-06s'|format(time*1000000|round()) %}
+        <tr>
+          <td class="test-name">{{ test.name }}</td><td class="test-description">{{ test.meta.method.snippet[0]|default("-") }}</td><td class="test-time" data-time={{ time }}>{{ time }}s</td>
+        </tr>
+        {#<tr><td colspan=3><pre>{{ dump(test) }}</pre></td></tr>#}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 

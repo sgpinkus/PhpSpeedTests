@@ -4,6 +4,16 @@
     {% block head %}
       <link rel="stylesheet" href="style.css" />
       <title>{% block title %}{% endblock %}</title>
+      <style>
+      {% block style %}
+        html, body { height:100% border: 0; padding: 0; margin: 0; }
+        #content { max-width:1000px; margin: 0 auto; }
+        .test-suite { border-top:solid 2px #888; margin:2em 0; }
+        table.test-result td.test-name { min-width: 240px; }
+        table.test-result td.test-description { width: 100%; }
+        table.test-result td.test-time { text-align: right; }        
+      {% endblock %}  
+      </style>
     {% endblock %}
   </head>
   <body>

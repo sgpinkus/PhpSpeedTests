@@ -1,11 +1,16 @@
 {% extends "layout.html" %}
 
 {% block title %}Index{% endblock %}
-{% block head %}
-    {{ parent() }}
-    <style type="text/css">
-        .important { color: #336699; }
-    </style>
+{% block style %}
+        {{ parent() }}
+        table.test-result {
+          width:100%;
+          text-align: left;
+        }
+        table.test-result > td {
+          vertical-align: middle;
+        }
+        
 {% endblock %}
 {% block content %}
   {% for suite in suites %}
