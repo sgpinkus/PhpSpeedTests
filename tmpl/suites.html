@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
-
-{% block title %}Index{% endblock %}
+{% block title %}PHP Speed Tests{% endblock %}
 {% block style %}
         {{ parent() }}
         table.test-result {
@@ -10,7 +9,6 @@
         table.test-result > td {
           vertical-align: middle;
         }
-        
 {% endblock %}
 {% block content %}
   {% for suite in suites %}

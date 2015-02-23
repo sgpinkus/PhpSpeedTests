@@ -121,8 +121,9 @@ class View
   private $stack = [];
   private $suites = [];
   private $twig;
+  private $fout;
 
-  public function __construct($tmpl = './tmpl/') 
+  public function __construct($tmpl = './tmpl/', $outFileName = 'index.html')
   {
     $loader = new Twig_Loader_Filesystem($tmpl);
     $this->twig = new Twig_Environment(
@@ -130,6 +131,10 @@ class View
       ['debug' => true]
     );
     $this->twig->addExtension(new Twig_Extension_Debug());
+    $this->fout = @fopen($outFileName, "w");
+    if(!$this->fout) {
+      throw new RuntimeException(error_get_last()['message']);
+    }
   }
 
   public function startEvent($eventType, $eventName, $meta) {
@@ -184,7 +189,14 @@ class View
   }
   
   public function render() {
-    print $this->twig->render("suites.html", ['suites' => $this->suites]);
+    fwrite($this->fout, $this->twig->render(
+      "suites.html",
+      [
+        'suites' => $this->suites,
+        'phpversion' => phpversion(),
+        'posix_uname' => posix_uname()
+      ]
+    ));
   }
 
   private function &getCurrentSuite() {
@@ -193,5 +205,6 @@ class View
 }
 
 function debug($msg) {
-  fprintf(STDERR, $msg . "\n");
+  global $debug;
+  isset($debug) && fprintf(STDERR, $msg . "\n");
 }

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+          <link rel="stylesheet" href="style.css" />
+      <title>Index</title>
+      <style>
+                      html, body { height:100% border: 0; padding: 0; margin: 0; }
+        #content { max-width:1000px; margin: 0 auto; }
+        .test-suite { border-top:solid 2px #888; margin:2em 0; }
+        table.test-result td.test-name { min-width: 240px; }
+        table.test-result td.test-description { width: 100%; }
+        table.test-result td.test-time { text-align: right; }        
+      
+        table.test-result {
+          width:100%;
+          text-align: left;
+        }
+        table.test-result > td {
+          vertical-align: middle;
+        }
+        
+  
+      </style>
+      </head>
+  <body>
+    <div id="header">
+                </div>    
+    <div id="content">      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Array Push Test</h4>
+      <p><i>array_push() vs $a[] =.</i></p>
+      <p></p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                              <tr>
+          <td class="test-name">Push with array_push()</td><td class="test-description">array_push($a, $i);</td><td class="test-time" data-time=0.490250>0.490250s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Push with $a[] =</td><td class="test-description">$a[] = $i;</td><td class="test-time" data-time=0.310888>0.310888s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Using the =&amp;-ref-operator</h4>
+      <p><i>$obj = new SomeClass() vs. $obj =&amp; new SomeClass() </i></p>
+      <p>Could this really have an effect? Objects are already reference types.</p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                              <tr>
+          <td class="test-name">No Ref</td><td class="test-description">$obj = new SomeClass();</td><td class="test-time" data-time=0.000462>0.000462s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">With Ref</td><td class="test-description">$obj =&amp; new SomeClass();</td><td class="test-time" data-time=0.000483>0.000483s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Counting Loop Test</h4>
+      <p><i>for() vs while()</i></p>
+      <p></p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                              <tr>
+          <td class="test-name">For Loop</td><td class="test-description">for($i = 0; $i &lt; 10e5; $i++);</td><td class="test-time" data-time=0.042387>0.042387s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">While Loop</td><td class="test-description">$i = 0; while($i &lt; 10e5) $i++;</td><td class="test-time" data-time=0.036557>0.036557s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Read Hash Loop Test</h4>
+      <p><i>foreach() vs. for() vs. while(list() = each()) </i></p>
+      <p>What is the best way to loop a hash array with stringy keys?</p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                              <tr>
+          <td class="test-name">Foreach value</td><td class="test-description">foreach($aHash as $val);</td><td class="test-time" data-time=0.001070>0.001070s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">While list() each() value</td><td class="test-description">while(list(,$val) = each($aHash));</td><td class="test-time" data-time=0.007445>0.007445s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Foreach key value</td><td class="test-description">foreach($aHash as $key =&gt; $val);</td><td class="test-time" data-time=0.001642>0.001642s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">While list() each() key value</td><td class="test-description">while(list($key,$val) = each($aHash));</td><td class="test-time" data-time=0.007866>0.007866s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">For count() array_keys()</td><td class="test-description">for($i=0; $i&lt;$size; $i++) $tmp = $aHash[$keys[$i]];</td><td class="test-time" data-time=0.006557>0.006557s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Just array_keys()</td><td class="test-description">$keys = array_keys($aHash);</td><td class="test-time" data-time=0.002950>0.002950s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Just array_valuess()</td><td class="test-description">$keys = array_values($aHash);</td><td class="test-time" data-time=0.001575>0.001575s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Read Loop Test</h4>
+      <p><i>foreach() vs. for() vs. while(list() = each())</i></p>
+      <p>What is the best way to loop an hash with only numeric keys? </p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                              <tr>
+          <td class="test-name">Foreach value</td><td class="test-description">foreach($aHash as $val);</td><td class="test-time" data-time=0.001038>0.001038s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">While list() each() value</td><td class="test-description">while(list(,$val) = each($aHash));</td><td class="test-time" data-time=0.006922>0.006922s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Foreach key value</td><td class="test-description">foreach($aHash as $key =&gt; $val);</td><td class="test-time" data-time=0.001196>0.001196s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">While list() each() key value</td><td class="test-description">while(list($key,$val) = each($aHash));</td><td class="test-time" data-time=0.007426>0.007426s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">For count() array_keys()</td><td class="test-description">for($i=0; $i&lt;$size; $i++) $tmp = $aHash[$keys[$i]];</td><td class="test-time" data-time=0.004673>0.004673s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Just array_keys()</td><td class="test-description">$keys = array_keys($aHash);</td><td class="test-time" data-time=0.002210>0.002210s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Just array_valuess()</td><td class="test-description">$keys = array_values($aHash);</td><td class="test-time" data-time=0.001626>0.001626s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>String Formatter Test</h4>
+      <p><i>print &quot;Hello {$foo}&quot; vs printf(&quot;Hello %s&quot;, $foo) vs ..</i></p>
+      <p></p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                              <tr>
+          <td class="test-name">Print Inline</td><td class="test-description">echo &quot;Hello {$you}&quot;;</td><td class="test-time" data-time=0.421973>0.421973s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Printf()</td><td class="test-description">printf(&quot;Hello %s&quot;, $you);</td><td class="test-time" data-time=0.684175>0.684175s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">Concat print</td><td class="test-description">print &#039;Hello &#039; . $you;</td><td class="test-time" data-time=0.513068>0.513068s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>References Vs Pass By Value</h4>
+      <p><i>$data &amp;= getData() vs. $data = getData() </i></p>
+      <p>Could this really have an effect? Objects are already reference types.</p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                              <tr>
+          <td class="test-name">No Ref</td><td class="test-description">$data = $obj-&gt;get();</td><td class="test-time" data-time=0.000445>0.000445s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">With Ref</td><td class="test-description">$data =&amp; $obj-&gt;getRef();</td><td class="test-time" data-time=0.000436>0.000436s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">No Ref Modify</td><td class="test-description">$data = $obj-&gt;get(); $data[] = 100;</td><td class="test-time" data-time=0.001208>0.001208s</td>
+        </tr>
+                                      <tr>
+          <td class="test-name">With Ref Modify</td><td class="test-description">$data =&amp; $obj-&gt;getRef(); $data[] = 100;</td><td class="test-time" data-time=0.000614>0.000614s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+  </div>
+    <div id="footer">
+                </div>
+  </body>
+</html>
