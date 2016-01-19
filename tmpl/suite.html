@@ -6,14 +6,18 @@
       <p>{{ suite.meta.description }}</p>
     </caption>
     <thead>
-      <tr><th>Test Name</th><th>Description</th><th>Time</th></tr>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
     </thead>
     <tbody>
       {%for test in suite.tests %}
         {% set time = '%06f'|format(test.meta.time) %}
         {% set utime = '%-06s'|format(time*1000000|round()) %}
+        {% set pctTime = '%d'|format(test.meta.relTime*100) %}
         <tr>
-          <td class="test-name">{{ test.name }}</td><td class="test-description">{{ test.meta.method.snippet[0]|default("-") }}</td><td class="test-time" data-time={{ time }}>{{ time }}s</td>
+          <td class="test-name"><a href="{{ test.meta.link }}">{{ test.name }}</a></td>
+          <td class="test-description">{{ test.meta.method.snippet[0]|default("-") }}</td>
+          <td class="test-pct-time" data-pct-time={{ pctTime }}>{{ pctTime }}%</td>
+          <td class="test-time" data-time={{ time }}>{{ time }}s</td>
         </tr>
         {#<tr><td colspan=3><pre>{{ dump(test) }}</pre></td></tr>#}
       {% endfor %}

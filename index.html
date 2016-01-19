@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+          <link rel="stylesheet" href="css/style.css" />
+      <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+      <title>PHP Speed Tests</title>
+      <style>
+                      html, body { height:100% border: 0; padding: 0; margin: 0; }
+        #content, #header, #footer { max-width:1000px; margin: 0 auto; }
+        #header { text-align: center; }
+        .test-suite { border-top:solid 2px #888; margin:2em 0; }
+        table.test-result td { min-width: 120px; }
+        table.test-result td.test-name { min-width: 240px; }
+        table.test-result td.test-description { width: 100%; }
+        .github-link { float: right; font-size: small;}
+      
+        table.test-result {
+          width:100%;
+          text-align: left;
+        }
+        table.test-result > td {
+          vertical-align: middle;
+        }
+      </style>
+      </head>
+  <body>
+    <div id="header">
+            <a class="github-link" href="https://github.com/sam-at-github/PhpSpeedTests"><i>Edit on GitHub</i></a>
+      <h1>PHP Speed Tests</h1>
+      <p>version: 5.4.45-0+deb7u2.1</p>
+          </div>
+    <div id="content">      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Array Push Test</h4>
+      <p><i>array_push() vs $a[] =.</i></p>
+      <p></p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                                      <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ArrayPushTest.php#L14">Push with array_push()</a></td>
+          <td class="test-description">array_push($a, $i);</td>
+          <td class="test-pct-time" data-pct-time=168>168%</td>
+          <td class="test-time" data-time=0.639996>0.639996s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ArrayPushTest.php#L30">Push with $a[] =</a></td>
+          <td class="test-description">$a[] = $i;</td>
+          <td class="test-pct-time" data-pct-time=100>100%</td>
+          <td class="test-time" data-time=0.380782>0.380782s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Using the =&amp;-ref-operator</h4>
+      <p><i>$obj = new SomeClass() vs. $obj =&amp; new SomeClass() </i></p>
+      <p>Could this really have an effect? Objects are already reference types.</p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                                      <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ConstructWithRefOperatorTest.php#L14">No Ref</a></td>
+          <td class="test-description">$obj = new SomeClass();</td>
+          <td class="test-pct-time" data-pct-time=100>100%</td>
+          <td class="test-time" data-time=0.001708>0.001708s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ConstructWithRefOperatorTest.php#L29">With Ref</a></td>
+          <td class="test-description">$obj =&amp; new SomeClass();</td>
+          <td class="test-pct-time" data-pct-time=106>106%</td>
+          <td class="test-time" data-time=0.001827>0.001827s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Counting Loop Test</h4>
+      <p><i>for() vs while()</i></p>
+      <p></p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                                      <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/CountingLoopTest.php#L14">For Loop</a></td>
+          <td class="test-description">for($i = 0; $i &lt; 10e5; $i++);</td>
+          <td class="test-pct-time" data-pct-time=105>105%</td>
+          <td class="test-time" data-time=0.068078>0.068078s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/CountingLoopTest.php#L27">While Loop</a></td>
+          <td class="test-description">$i = 0; while($i &lt; 10e5) $i++;</td>
+          <td class="test-pct-time" data-pct-time=100>100%</td>
+          <td class="test-time" data-time=0.064635>0.064635s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Read Hash Loop Test</h4>
+      <p><i>foreach() vs. for() vs. while(list() = each()) </i></p>
+      <p>What is the best way to loop a hash array with stringy keys?</p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                                      <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadHashLoopTest.php#L26">Foreach value</a></td>
+          <td class="test-description">foreach($aHash as $val);</td>
+          <td class="test-pct-time" data-pct-time=100>100%</td>
+          <td class="test-time" data-time=0.001338>0.001338s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadHashLoopTest.php#L37">While list() each() value</a></td>
+          <td class="test-description">while(list(,$val) = each($aHash));</td>
+          <td class="test-pct-time" data-pct-time=839>839%</td>
+          <td class="test-time" data-time=0.011233>0.011233s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadHashLoopTest.php#L48">Foreach key value</a></td>
+          <td class="test-description">foreach($aHash as $key =&gt; $val);</td>
+          <td class="test-pct-time" data-pct-time=156>156%</td>
+          <td class="test-time" data-time=0.002094>0.002094s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadHashLoopTest.php#L59">While list() each() key value</a></td>
+          <td class="test-description">while(list($key,$val) = each($aHash));</td>
+          <td class="test-pct-time" data-pct-time=1003>1003%</td>
+          <td class="test-time" data-time=0.013423>0.013423s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadHashLoopTest.php#L70">For count() array_keys()</a></td>
+          <td class="test-description">for($i=0; $i&lt;$size; $i++) $tmp = $aHash[$keys[$i]];</td>
+          <td class="test-pct-time" data-pct-time=566>566%</td>
+          <td class="test-time" data-time=0.007578>0.007578s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadHashLoopTest.php#L83">Just array_keys()</a></td>
+          <td class="test-description">$keys = array_keys($aHash);</td>
+          <td class="test-pct-time" data-pct-time=301>301%</td>
+          <td class="test-time" data-time=0.004035>0.004035s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadHashLoopTest.php#L94">Just array_valuess()</a></td>
+          <td class="test-description">$keys = array_values($aHash);</td>
+          <td class="test-pct-time" data-pct-time=162>162%</td>
+          <td class="test-time" data-time=0.002180>0.002180s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>Read Loop Test</h4>
+      <p><i>foreach() vs. for() vs. while(list() = each())</i></p>
+      <p>What is the best way to loop an hash with only numeric keys? </p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                                      <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadLoopTest.php#L23">Foreach value</a></td>
+          <td class="test-description">foreach($aHash as $val);</td>
+          <td class="test-pct-time" data-pct-time=100>100%</td>
+          <td class="test-time" data-time=0.001288>0.001288s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadLoopTest.php#L34">While list() each() value</a></td>
+          <td class="test-description">while(list(,$val) = each($aHash));</td>
+          <td class="test-pct-time" data-pct-time=797>797%</td>
+          <td class="test-time" data-time=0.010269>0.010269s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadLoopTest.php#L45">Foreach key value</a></td>
+          <td class="test-description">foreach($aHash as $key =&gt; $val);</td>
+          <td class="test-pct-time" data-pct-time=113>113%</td>
+          <td class="test-time" data-time=0.001463>0.001463s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadLoopTest.php#L56">While list() each() key value</a></td>
+          <td class="test-description">while(list($key,$val) = each($aHash));</td>
+          <td class="test-pct-time" data-pct-time=966>966%</td>
+          <td class="test-time" data-time=0.012445>0.012445s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadLoopTest.php#L67">For count() array_keys()</a></td>
+          <td class="test-description">for($i=0; $i&lt;$size; $i++) $tmp = $aHash[$keys[$i]];</td>
+          <td class="test-pct-time" data-pct-time=426>426%</td>
+          <td class="test-time" data-time=0.005497>0.005497s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadLoopTest.php#L80">Just array_keys()</a></td>
+          <td class="test-description">$keys = array_keys($aHash);</td>
+          <td class="test-pct-time" data-pct-time=240>240%</td>
+          <td class="test-time" data-time=0.003097>0.003097s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/ReadLoopTest.php#L91">Just array_valuess()</a></td>
+          <td class="test-description">$keys = array_values($aHash);</td>
+          <td class="test-pct-time" data-pct-time=172>172%</td>
+          <td class="test-time" data-time=0.002220>0.002220s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>String Formatter Test</h4>
+      <p><i>print &quot;Hello {$foo}&quot; vs printf(&quot;Hello %s&quot;, $foo) vs ..</i></p>
+      <p></p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                                      <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/StringFormatterTest.php#L22">Print Inline</a></td>
+          <td class="test-description">echo &quot;Hello {$you}&quot;;</td>
+          <td class="test-pct-time" data-pct-time=100>100%</td>
+          <td class="test-time" data-time=0.494690>0.494690s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/StringFormatterTest.php#L39">Printf()</a></td>
+          <td class="test-description">printf(&quot;Hello %s&quot;, $you);</td>
+          <td class="test-pct-time" data-pct-time=235>235%</td>
+          <td class="test-time" data-time=1.164686>1.164686s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/StringFormatterTest.php#L56">Concat print</a></td>
+          <td class="test-description">print &#039;Hello &#039; . $you;</td>
+          <td class="test-pct-time" data-pct-time=141>141%</td>
+          <td class="test-time" data-time=0.699475>0.699475s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+      <div class="test-suite">
+  <table class="test-result">
+    <caption>
+      <h4>References Vs Pass By Value</h4>
+      <p><i>$data &amp;= getData() vs. $data = getData() </i></p>
+      <p>Could this really have an effect? Objects are already reference types.</p>
+    </caption>
+    <thead>
+      <tr><th>Test Name</th><th>Description</th><th>% Time</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+                                      <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/UsingReferencesTest.php#L22">No Ref</a></td>
+          <td class="test-description">$data = $obj-&gt;get();</td>
+          <td class="test-pct-time" data-pct-time=100>100%</td>
+          <td class="test-time" data-time=0.000618>0.000618s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/UsingReferencesTest.php#L37">With Ref</a></td>
+          <td class="test-description">$data =&amp; $obj-&gt;getRef();</td>
+          <td class="test-pct-time" data-pct-time=103>103%</td>
+          <td class="test-time" data-time=0.000642>0.000642s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/UsingReferencesTest.php#L52">No Ref Modify</a></td>
+          <td class="test-description">$data = $obj-&gt;get(); $data[] = 100;</td>
+          <td class="test-pct-time" data-pct-time=288>288%</td>
+          <td class="test-time" data-time=0.001781>0.001781s</td>
+        </tr>
+                                              <tr>
+          <td class="test-name"><a href="https://github.com/sam-at-github/PhpSpeedTests/blob/master//tests/UsingReferencesTest.php#L68">With Ref Modify</a></td>
+          <td class="test-description">$data =&amp; $obj-&gt;getRef(); $data[] = 100;</td>
+          <td class="test-pct-time" data-pct-time=137>137%</td>
+          <td class="test-time" data-time=0.000852>0.000852s</td>
+        </tr>
+                  </tbody>
+  </table>
+</div>
+
+  </div>
+    <div id="footer">
+                </div>
+  </body>
+</html>

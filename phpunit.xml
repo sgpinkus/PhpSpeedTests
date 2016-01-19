@@ -9,7 +9,8 @@
   <php>
     <ini name="error_reporting" value="E_ALL"/>
     <ini name="log_errors" value="1"/>
-    <!--<ini name="error_log" value="error.log"/>-->   
+    <!--<ini name="error_log" value="error.log"/>-->
+    <env name="repo_base" value="https://github.com/sam-at-github/PhpSpeedTests/blob/master/"/>
   </php>
   <testsuites>
     <testsuite name="Test Suite">

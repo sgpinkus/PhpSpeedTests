@@ -38,6 +38,7 @@ class TimingListener extends PHPUnit_Framework_BaseTestListener
     try {
       $reflection = new ReflectionClass($name);
       $meta = self::parseDocBlock($reflection);
+      $meta['reflectionClass'] = $reflection;
       $this->view->startEvent("suite", $name, $meta);
     }
     catch(ReflectionException $e) {
@@ -154,9 +155,9 @@ class View
     }
   } 
 
-  public function start_suite($name, $meta) {
-    debug("Start suite $name\n");
-    $name = isset($meta['name']) ? $meta['name'] : $name;
+  public function start_suite($class, $meta) {
+    debug("Start suite $class\n");
+    $name = isset($meta['name']) ? $meta['name'] : $class;
     $newSuite = [
       'name' => $name,
       'meta' => $meta,
@@ -165,27 +166,41 @@ class View
     ];
     $this->suites[] = $newSuite;
   }
-  
-  public function stop_suite($name, $meta) {
-    debug("Stop suite $name\n");
+
+  /**
+   * Do summary stats for suite just finished.
+   */
+  public function stop_suite($class, $meta) {
+    debug("Stop suite $class\n");
+    $currentSuite =& $this->getCurrentSuite();
+    foreach($currentSuite['tests'] as &$test) {
+      $test['meta']['relTime'] = $test['meta']['time']/$currentSuite['stats']['min'];
+    }
   }
   
-  public function start_test($name, $meta) {
-    debug("\tStart test $name\n");
+  public function start_test($method, $meta) {
+    debug("\tStart test $method\n");
   }
-  
-  public function stop_test($name, $meta) {
-    debug("\tStop test $name\n");
-    $name = isset($meta['method']['name'][0]) ? $meta['method']['name'][0] : $name;
+
+  /**
+   * Collect stats on test method just finished.
+   */
+  public function stop_test($method, $meta) {
+    debug("\tStop test $method\n");
+    $name = isset($meta['method']['name'][0]) ? $meta['method']['name'][0] : $method;
     $newTest = [
       'name' => $name,
       'meta' => $meta
     ];
     $currentSuite =& $this->getCurrentSuite();
+    $testMethod = $currentSuite['meta']['reflectionClass']->getMethod($method);
+    $testFile = str_replace(getcwd(), "", $testMethod->getFileName()); // Close enough.
+    $testLine = $testMethod->getStartLine();
+    $newTest['meta']['link'] = getenv("repo_base") . "{$testFile}#L{$testLine}";
     $currentSuite['tests'][] = $newTest;
     $currentSuite['stats']['min'] = min($currentSuite['stats']['min'], $meta['time']);
     $currentSuite['stats']['max'] = max($currentSuite['stats']['max'], $meta['time']);
-    $currentSuite['stats']['cnt']++;    
+    $currentSuite['stats']['cnt']++;
   }
   
   public function render() {
@@ -194,7 +209,8 @@ class View
       [
         'suites' => $this->suites,
         'phpversion' => phpversion(),
-        'posix_uname' => posix_uname()
+        'posix_uname' => posix_uname(),
+        'repo_base' => dirname(dirname(getenv("repo_base")))
       ]
     ));
   }
@@ -206,5 +222,5 @@ class View
 
 function debug($msg) {
   global $debug;
-  isset($debug) && fprintf(STDERR, $msg . "\n");
+  isset($debug) and fprintf(STDERR, $msg . "\n");
 }
