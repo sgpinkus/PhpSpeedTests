@@ -2,7 +2,7 @@
 <html>
   <head>
     {% block head %}
-      <link rel="stylesheet" href="style.css" />
+      <link rel="stylesheet" href="css/style.css" />
       <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
       <title>{% block title %}{% endblock %}</title>
       <style>
@@ -11,9 +11,10 @@
         #content, #header, #footer { max-width:1000px; margin: 0 auto; }
         #header { text-align: center; }
         .test-suite { border-top:solid 2px #888; margin:2em 0; }
+        table.test-result td { min-width: 120px; }
         table.test-result td.test-name { min-width: 240px; }
         table.test-result td.test-description { width: 100%; }
-        table.test-result td.test-time { text-align: right; }
+        .github-link { float: right; font-size: small;}
       {% endblock %}
       </style>
     {% endblock %}
@@ -21,8 +22,9 @@
   <body>
     <div id="header">
       {% block header %}
+      <a class="github-link" href="{{ repo_base }}"><i>Edit on GitHub</i></a>
       <h1>PHP Speed Tests</h1>
-      {{ phpversion }}
+      <p>version: {{ phpversion }}</p>
       {% endblock %}
     </div>
     <div id="content">{% block content %}{% endblock %}</div>
