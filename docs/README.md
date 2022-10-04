@@ -1,7 +1,7 @@
 # Overview
 I came accross http://www.phpbench.com/. Is it worth trying to use [PHPUnit](https://phpunit.de/) to organise and run a collection of PHP timing tests? I'm asuming it is. The advantage is a common framework for and organisation of tests. This repo is that.
 
-Sample output [here](https://sam-at-github.github.com/PhpSpeedTests).
+Sample output [here](https://sgpinkus.github.io/PhpSpeedTests/).
 
 # Requirements
 
